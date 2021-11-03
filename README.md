@@ -1,8 +1,8 @@
 # Weather_Dashboard
 
 
-<img src="./assets/images/WebAPISCRN.PNG"
-     alt="The user interface of Quizzer the Web API Edition."
+<img src="./assets/images/weather_dashboard_screen.PNG"
+     alt="The user interface of Weather Dashboard."
       />
 
 
