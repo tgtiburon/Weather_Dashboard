@@ -1,7 +1,5 @@
 # Weather_Dashboard
 
-# Web-APIs-Challenge-Code-Quiz
-
 
 <img src="./assets/images/WebAPISCRN.PNG"
      alt="The user interface of Quizzer the Web API Edition."
