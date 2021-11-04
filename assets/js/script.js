@@ -151,7 +151,7 @@ const updateCityWeatherUI  = (cityName, cityIcon, cityTemp, cityWind, cityHumidi
 
 // Use api to get coordinates of city name
 const getCoords = (city) => {
-
+debugger;
 
    // debugging
    cityName = city;
@@ -183,6 +183,7 @@ const getCoords = (city) => {
 };
 // Use coordinates to get all the weather data needed.
 const getWeather = (lon,lat) => {
+    debugger;
 
     // using the one call api from openweathermap we can get everything we need.
     let apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat  + "&lon=" + lon 
@@ -210,14 +211,15 @@ const getWeather = (lon,lat) => {
 
 // Capture all button events
 const buttonHandler = (event) => {
-
+debugger;
 
     if(event.target.id === "debug")
     {
         // This is where I will force a getCoords();
         console.log("Calling new weather");
-        city = "lansing";
-        getCoords(city);
+        //city = "lansing";
+        searchCity = $("#srchInput").val();
+        getCoords(searchCity);
     }
     if(event.target.id === "srchBtn") {
 
@@ -242,7 +244,10 @@ const buttonHandler = (event) => {
         };
         localStorage.setItem("savedCities", JSON.stringify(savedCities));
        
-
+        // Call the server
+        // for now disable this
+        
+        //getCoords(searchCity);
 
         updateSavedCitiesUI(savedCities);
 
