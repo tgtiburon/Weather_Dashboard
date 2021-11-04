@@ -1,13 +1,13 @@
 
 const mainContainerEl = document.querySelector("p>#main-container");
 
-// let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
+// let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + yekIPA;
 //         axios.get(queryURL)
 //         .then(function(response){
 
 // lansing 4998830
 //#region Variables
-const APIKey = "14a2bf498ec7475c9f365cf46a525533";
+const yekIPA = "14a2bf498ec7475c9f365cf46a525533";
 //const cityName = "lansing";
 const lansingID = 4998830;
 let cityName = "Lansing";
@@ -16,27 +16,51 @@ let cityWind = "0 MPH";
 let cityHumidity = "0%";
 let cityUV = "0.00";
 weatherData = [];
+let savedCities = [];
+
 
 const initialSetup = () => {
     console.log("in initial setup");
 
-
-
-
     // for debugging lets load the saved data to stop server spam
-    let weatherData = loadSavedDataDEBUG();
+    let weatherData = loadWeatherData();
+    let savedCities = loadSavedCitiesData();
+  
     console.log(weatherData);
+    console.log(savedCities);
     // lets read the weatherData
+
+    updateSavedCitiesUI(savedCities);
+    
    
 
 }
-const loadSavedDataDEBUG = () => {
+const loadSavedCitiesData = () => {
+
+    let savedCities = localStorage.getItem("savedCities");
+
+    if (!savedCities) {
+        savedCities = [];
+      
+    } else {
+        // savedCities = JSON.parse(savedCities);
+        // numOfTasks = savedCities.length;
+        savedCities = JSON.parse(localStorage.getItem("savedCities"));
+        
+        
+    }
+        
+    return savedCities;
+}
+
+const loadWeatherData = () => {
 
     let weatherData = localStorage.getItem("weatherData");
+    
 
     if (!weatherData) {
         weatherData = [];
-        numOfTasks = 0;
+    
     } else {
         // weatherData = JSON.parse(weatherData);
         // numOfTasks = weatherData.length;
@@ -46,8 +70,36 @@ const loadSavedDataDEBUG = () => {
     }
         
     return weatherData;
+
+  
     
 };
+
+
+const updateSavedCitiesUI = (savedCities) => {
+    // iterate to load our saved cities
+
+    $("#city-holder").empty();
+
+    if(savedCities.length > 8) {
+
+      
+        // we need to shorten it.
+    }
+    for (let i = 0; i < savedCities.length; i++) {
+   
+        let objName = "";
+        buttonStr = savedCities[i];
+
+        objName = $("<button>")
+            .addClass("btn btn btn-secondary w-100 mb-3")
+            .html(buttonStr);
+        $("#city-holder").append(objName);  
+    }
+
+
+}
+
 const readWeatherData = (weatherData) => {
    // cityName = weatherData.current.name;
     cityIcon = weatherData.current.weather[0].icon;
@@ -100,10 +152,11 @@ const updateCityWeatherUI  = (cityName, cityIcon, cityTemp, cityWind, cityHumidi
 // Use api to get coordinates of city name
 const getCoords = (city) => {
 
-    // debugging
-    cityName = "lansing";
+
+   // debugging
+   cityName = city;
   
-    let apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=imperial" + "&appid="  + APIKey;
+    let apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=imperial" + "&appid="  + yekIPA;
 
     fetch(apiUrl).then(function(response) {
         if(response.ok) {
@@ -130,12 +183,10 @@ const getCoords = (city) => {
 };
 // Use coordinates to get all the weather data needed.
 const getWeather = (lon,lat) => {
-   // let lon = lon;
-   // let lat = lat;
 
     // using the one call api from openweathermap we can get everything we need.
     let apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat  + "&lon=" + lon 
-                 + "&units=imperial" + "&exclude=minutely,hourly,alerts"  + "&appid="  + APIKey;
+                 + "&units=imperial" + "&exclude=minutely,hourly,alerts"  + "&appid="  + yekIPA;
 
     fetch(apiUrl).then(function(response) {
         if(response.ok) {
@@ -145,6 +196,8 @@ const getWeather = (lon,lat) => {
                console.log(data);
                localStorage.setItem("weatherData", JSON.stringify(data));
                // get the lon and lat so I can call the one call api
+
+               readWeatherData(weatherData);
                  
             });
         } else {
@@ -157,14 +210,42 @@ const getWeather = (lon,lat) => {
 
 // Capture all button events
 const buttonHandler = (event) => {
-   // let buttonHandler = function(event) {
-       // console.log("in button handler");
-    console.log(event.target.id);
+
 
     if(event.target.id === "debug")
     {
         // This is where I will force a getCoords();
-        console.log("in debug");
+        console.log("Calling new weather");
+        city = "lansing";
+        getCoords(city);
+    }
+    if(event.target.id === "srchBtn") {
+
+        searchCity = $("#srchInput").val(); 
+       // console.log(searchCity);
+
+       if(searchCity == "") {
+           alert("You did not enter a city.");
+           return;
+        }
+      
+        
+         //let savedCities = loadSavedCitiesData();
+
+        savedCities.unshift(searchCity);
+        if(savedCities.length > 8) {
+            //debugger;
+            
+            savedCities.pop();
+            //debugger;
+
+        };
+        localStorage.setItem("savedCities", JSON.stringify(savedCities));
+       
+
+
+        updateSavedCitiesUI(savedCities);
+
     }
 };
 
@@ -172,6 +253,7 @@ const buttonHandler = (event) => {
 
 //getCoords(cityName);
 initialSetup();
+
 
 // EventListenerd
 document.addEventListener("click", buttonHandler);
