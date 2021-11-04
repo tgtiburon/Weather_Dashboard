@@ -50,6 +50,7 @@ const loadSavedDataDEBUG = () => {
 };
 const readWeatherData = (weatherData) => {
    // cityName = weatherData.current.name;
+    cityIcon = weatherData.current.weather[0].icon;
     cityTemp = weatherData.current.temp;
     cityWind = weatherData.current.wind_speed;
     cityHumidity = weatherData.current.humidity;
@@ -61,12 +62,48 @@ const readWeatherData = (weatherData) => {
     console.log("cityHumidity= " + cityHumidity);
     console.log("cityUV= " + cityUV);
 
-    updateCityWeatherUI(cityName, cityTemp, cityWind, cityHumidity, cityUV);
+
+    updateCityWeatherUI(cityName, cityIcon, cityTemp, cityWind, cityHumidity, cityUV);
 
 
 }
 // use our data to update the whole UI
-const updateCityWeatherUI  = (cityName, cityTemp, cityWind, cityHumidity, cityUV) => {
+const updateCityWeatherUI  = (cityName, cityIcon, cityTemp, cityWind, cityHumidity, cityUV) => {
+
+    $("#weatherIcon0").attr("src", "http://openweathermap.org/img/w/" + cityIcon + ".png");
+    // add some logic to get todays date
+    todaysDate  = "11/04/2021";
+    var todaysDate = moment().format("l");
+
+    // debugging
+   // cityUV = "1.99";
+    //console.log(date);
+    $("#cityName0").text(cityName + "  (" + todaysDate + ")");
+    $("#cityTemp0").text("Temp: " + cityTemp + " °F" );
+    $("#cityWind0").text("Wind: "+ cityWind + " MPH");
+    $("#cityUV0").text(cityUV); // need to make this a badge
+    // We need if's to set up colored badges based on UVI
+    if (cityUV <= 2.99) {
+        // Green badge
+        $("#cityUV0").attr("class", "badge-success");
+    } else if (cityUV >= 3.00  && cityUV <= 5.99) {
+        // Yellow 
+        $("#cityUV0").attr("class", "badge-warning");
+
+    }  else if (cityUV >= 6.00 ) {
+        // Orange
+        $("#cityUV0").attr("class", "badge-danger");
+    } // else if (cityUV >= 8.0  && cityUV < 10.99) {
+       // badge-danger
+   // }  else if (cityUV >= 11.00 ) {
+
+        // Purple 
+   // }
+
+
+    $("#cityUV0").addClass(" badge badge-pill badge-primary");
+
+
 
 
 }
