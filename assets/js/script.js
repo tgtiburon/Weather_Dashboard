@@ -71,41 +71,30 @@ const readWeatherData = (weatherData) => {
 const updateCityWeatherUI  = (cityName, cityIcon, cityTemp, cityWind, cityHumidity, cityUV) => {
 
     $("#weatherIcon0").attr("src", "http://openweathermap.org/img/w/" + cityIcon + ".png");
-    // add some logic to get todays date
-    todaysDate  = "11/04/2021";
+   
+    // Get today's date using moment.js
     var todaysDate = moment().format("l");
 
-    // debugging
-   // cityUV = "1.99";
-    //console.log(date);
+ //cityUV = "2.00";
+
     $("#cityName0").text(cityName + "  (" + todaysDate + ")");
     $("#cityTemp0").text("Temp: " + cityTemp + " °F" );
+    $("#cityHumidity0").text("Humidity: " + cityHumidity + "%");
     $("#cityWind0").text("Wind: "+ cityWind + " MPH");
     $("#cityUV0").text(cityUV); // need to make this a badge
+   // $("#cityUV0").addClass("badge badge-pill badge-primary");
     // We need if's to set up colored badges based on UVI
     if (cityUV <= 2.99) {
         // Green badge
-        $("#cityUV0").attr("class", "badge-success");
+        $("#cityUV0").attr("class", " badge badge-pill badge-success");
     } else if (cityUV >= 3.00  && cityUV <= 5.99) {
         // Yellow 
-        $("#cityUV0").attr("class", "badge-warning");
+        $("#cityUV0").attr("class", " badge badge-pill badge-warning");
 
     }  else if (cityUV >= 6.00 ) {
         // Orange
-        $("#cityUV0").attr("class", "badge-danger");
-    } // else if (cityUV >= 8.0  && cityUV < 10.99) {
-       // badge-danger
-   // }  else if (cityUV >= 11.00 ) {
-
-        // Purple 
-   // }
-
-
-    $("#cityUV0").addClass(" badge badge-pill badge-primary");
-
-
-
-
+        $("#cityUV0").attr("class", " badge badge-pill badge-danger");
+    } 
 }
 
 // Use api to get coordinates of city name
