@@ -4,22 +4,173 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <!-- Bootstrap CSS-->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <!-- <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+      crossorigin="anonymous"
+    /> -->
+    <!-- <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
+      rel="stylesheet"
+    /> -->
+    <!-- test icons -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link 
+        href="./assets/css/style.css" 
+        rel="stylesheet"
+    />
     <title>Weather Dashboard</title>
-    <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
 
 
 
 <body>
-   
-   
-   
-   
-    <footer> 2021 by Tony Gendreau &copy;</footer>
+
+    <nav class="navbar ">
+        <p class="text-center mb-0 h2 w-100 font-weight-bold" >Work Day Scheduler</p>
+    </nav>
+    <div class="p-0" id="main-container">
+        <div class="row no-gutters">
+            <div class= "col-3 flex-column  p-5 h-100" id="city-box">
+                <div class="" id="search-holder">
+                    <p class="input-header">Search for a City:</p>
+                    <input class="form-control mb-4"  id="srchBtn" type="text" placeholder="Lansing">
+                    <button type="button" class="btn btn-primary w-100 mb-5">Search</button>
+                    <hr class="solid"> 
+                </div>
+                <div class="" id="city-holder"> 
+                    
+                    <button type="button" class="btn btn-secondary w-100 mt-5 mb-3">City 1</button>
+                    <button type="button" class="btn btn-secondary w-100 mb-3">City 2</button>
+                    <button type="button" class="btn btn-secondary w-100 mb-3">City 3</button>
+                    <button type="button" class="btn btn-secondary w-100 mb-3">City 4</button>
+                    <button type="button" class="btn btn-secondary w-100 mb-3">City 5</button>
+                    <button type="button" class="btn btn-secondary w-100 mb-3">City 6</button>
+                    <button type="button" class="btn btn-secondary w-100 mb-3">City 7</button>
+                    <button type="button" class="btn btn-secondary w-100 mb-3">City 8</button>
+                    
+                </div>
+            </div>
+           
+               
+
+          
 
 
+            <div class ="col-9" id="forecast-display">
+                <div class="" id="city-weather">
+
+                    <p class="font-weight-bold" id="cityName0">Lansing (11/04/2021)  (0)  </p>
+                    <p class="font-weight-bold" id="cityTemp0">Temp: 88.01 F</p>
+                    <p class="font-weight-bold" id="cityWind0">Wind: 5.77 MPH</p>
+                    <p class="font-weight-bold" id="cityHumidity0">Humidity: 46%</p>
+                    <p class="font-weight-bold" id="cityUV0">UV Index: 0.50 </p>
+
+
+                </div>
+                <div class="row " id="city-forecast">
+                    <p class="font-weight-bold" id="fiveDayTitle">5-Day Forecast:</p>
+                    <div class="col-12 flex-row justify-content-around " id="castHolder">
+
+                        <div class= "col-2 card mb-5  bg-secondary">
+                            <h4 class = "font-weight-bold bg-secondary" id="cityDate1">11/04/2021 </h4>
+                            <p class = "font-weight-bold" id="cityIcon1">Icon</p>
+                            <p class="font-weight-bold" id="cityTemp1">Temp: 88.01 F</p>
+                            <p class="font-weight-bold" id="cityWind1">Wind: 5.77 MPH</p>
+                            <p class="font-weight-bold" id="cityHumidity1">Humidity: 46%</p>
+                           
+                        </div>
+                        <div class= "col-2 card mb-5  bg-secondary">
+                            <h4 class = "font-weight-bold bg-secondary" id="cityDate2" >11/05/2021</h4>
+                            <p class = "font-weight-bold" id="cityIcon2">Icon</p>
+                            <p class="font-weight-bold" id="cityTemp2">Temp: 88.01 F</p>
+                            <p class="font-weight-bold" id="cityWind2">Wind: 5.77 MPH</p>
+                            <p class="font-weight-bold" id="cityHumidity2">Humidity: 46%</p>
+                           
+                        </div>
+                        <div class= "col-2 card mb-5 bg-secondary">
+                            <h4 class = "font-weight-bold bg-secondary" id="cityDate3">11/06/2021</h4>
+                            <p class = "font-weight-bold" id="cityIcon3">Icon</p>
+                            <p class="font-weight-bold" id="cityTemp3">Temp: 88.01 F</p>
+                            <p class="font-weight-bold" id="cityWind3">Wind: 5.77 MPH</p>
+                            <p class="font-weight-bold" id="cityHumidity3">Humidity: 46%</p>
+                           
+                        </div>
+                        <div class= "col-2 card mb-5  bg-secondary">
+                            <h4 class = "font-weight-bold bg-secondary" id="cityDate4">11/07/2021</h4>
+                            <p class = "font-weight-bold" id="cityIcon4">Icon</p>
+                            <p class="font-weight-bold" id="cityTemp4">Temp: 88.01 F</p>
+                            <p class="font-weight-bold" id="cityWind4">Wind: 5.77 MPH</p>
+                            <p class="font-weight-bold" id="cityHumidity4">Humidity: 46%</p>
+                           
+                        </div>
+
+                        <div class= "col-2 card mb-5  bg-secondary">
+                            <h4 class = "font-weight-bold bg-secondary" id="cityDate5">11/08/2021</h4>
+                            <p class = "font-weight-bold" id="cityIcon5">Icon</p>
+                            <p class="font-weight-bold" id="cityTemp5">Temp: 88.01 F</p>
+                            <p class="font-weight-bold" id="cityWind5">Wind: 5.77 MPH</p>
+                            <p class="font-weight-bold" id="cityHumidity5">Humidity: 46%</p>
+                           
+                        </div>
+
+
+
+
+
+
+                    </div>
+
+
+
+                </div>
+           
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+        </div>
+
+    </div>
     
+  
+
+
+   
+   
+   
+   
+
+
+
+
+
+
+    <footer class="navbar fixed-bottom bg-info"> 
+        <span class="center-text w-100">  2021 by Tony Gendreau &copy; </span>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="./assets/js/script.js"></script>
 </body>
 </html>
