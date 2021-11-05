@@ -31,8 +31,90 @@ const initialSetup = () => {
     // lets read the weatherData
 
     updateSavedCitiesUI(savedCities);
+    updateFiveDayUI(weatherData);
     
    
+
+}
+const updateFiveDayUI = (weatherData) =>  {
+    // iterrate through 5 days
+
+    for (let i = 0; i < 5.; i++) {
+ 
+      // debugger;
+
+        let objName1 = "";
+        objName1 = $("<div>")
+            .addClass("col-2 card mb-5 bg-secondary");
+           
+           // use moment.js
+        //let tmpStr = moment().format("l");
+       // let tmpStr = moment().add(i, 'days').calendar();
+       let tmpStr = moment().add(i, 'days').format("l");
+
+       // let tmpStr = weatherData.daily[0].temp.max;    
+        let objName2 = "";
+       
+
+        objName2 = $("<h4>")
+            .addClass("font-weight-bold bg-secondary")
+            .attr('id', 'cityDate'+ i)
+            .text(tmpStr);
+
+          
+        tmpStr = weatherData.daily[i].weather[0].icon;
+        let weathStr = "http://openweathermap.org/img/w/" + tmpStr + ".png"
+         
+        let objName3= "";
+        objName3 = $("<img>")
+            .addClass("font-weight-bold")
+            .attr("id", "cityIcon" + i)
+            .attr("src", weathStr);
+            //.attr('src', tmpStr2);
+
+       
+        
+
+
+        tmpStr = weatherData.daily[i].temp.max;
+        let objName4= "";
+        objName4 = $("<p>")
+            .addClass("font-weight-bold")
+            .attr('id', "cityTemp: " + i)
+            .text("Temp: " + tmpStr + " °F");
+
+
+        tmpStr = weatherData.daily[i].wind_speed;
+        let objName5= "";
+        objName5 = $("<p>")
+                .addClass("font-weight-bold")
+                .attr('id', "cityWind" + i)
+                .text("Wind: " + i + " MPH");
+
+
+        tmpStr = weatherData.daily[0].humidity;
+       // console.log(tmpStr);
+        let objName6= "";
+        objName6 = $("<p>")
+                .addClass("font-weight-bold")
+                .attr('id', "cityHumidity" + i)
+                .text("Humidity: " + tmpStr + " %"  );
+
+
+     
+        $("#castHolder").append(objName1);
+        objName1.append(objName2);
+        objName1.append(objName3);
+        objName1.append(objName4);
+        objName1.append(objName5);
+        objName1.append(objName6);
+
+
+       // $("#cityIcon" + i).attr("src", "http://openweathermap.org/img/w/" + tmpStr + ".png");
+     
+        
+    }
+
 
 }
 const loadSavedCitiesData = () => {
@@ -151,7 +233,7 @@ const updateCityWeatherUI  = (cityName, cityIcon, cityTemp, cityWind, cityHumidi
 
 // Use api to get coordinates of city name
 const getCoords = (city) => {
-debugger;
+//debugger;
 
    // debugging
    cityName = city;
@@ -246,7 +328,7 @@ debugger;
        
         // Call the server
         // for now disable this
-        
+
         //getCoords(searchCity);
 
         updateSavedCitiesUI(savedCities);
