@@ -15,6 +15,10 @@ let savedCities = [];
 let firstRun = true;
 
 
+// DEBUG STUFF
+
+
+
 const initialSetup = () => {
     
     console.log("in initial setup");
@@ -51,7 +55,19 @@ const loadSavedCitiesData = () => {
     let savedCities = localStorage.getItem("savedCities");
 
     if (!savedCities) {
-        savedCities = [];
+       // savedCities = [];
+       //debugging;
+       savedCities = [
+       // "DETROIT", 
+       // "MIAMI", 
+       // "DAYTON",
+       // "DALLAS",
+       // "MEMPHIS",
+       // "ATLANTA",
+       // "CHICAGO"
+    
+    ];
+    localStorage.setItem("savedCities", JSON.stringify(savedCities));
       
     } else {
       
@@ -73,11 +89,10 @@ const loadWeatherData = () => {
         firstRun = true;
     
     } else {
-        // weatherData = JSON.parse(weatherData);
-        // numOfTasks = weatherData.length;
+      
         weatherData = JSON.parse(localStorage.getItem("weatherData"));
         firstRun = false;
-       // readWeatherData(weatherData);
+     
           
     }
         
@@ -89,11 +104,13 @@ const loadWeatherData = () => {
 
 
 
-
-
-
 const updateFiveDayUI = (weatherData) =>  {
     // iterrate through 5 days
+    if($(".card")) {
+
+        // If the cards exist lets clear them.
+        $("#castHolder").empty();
+    }
 
     for (let i = 0; i < 5.; i++) {
  
@@ -123,9 +140,7 @@ const updateFiveDayUI = (weatherData) =>  {
             .addClass("font-weight-bold")
             .attr("id", "cityIcon" + i)
             .attr("src", weathStr);
-            //.attr('src', tmpStr2);
-
-       
+           
         tmpStr = weatherData.daily[i].temp.max;
         let objName4= "";
         objName4 = $("<p>")
@@ -169,6 +184,7 @@ const updateFiveDayUI = (weatherData) =>  {
 
 const updateSavedCitiesUI = (savedCities) => {
     // iterate to load our saved cities
+  
 
     $("#city-holder").empty();
 
@@ -184,7 +200,10 @@ const updateSavedCitiesUI = (savedCities) => {
 
         objName = $("<button>")
             .addClass("btn btn btn-secondary w-100 mb-3")
-            .html(buttonStr);
+            .html(buttonStr)
+            .attr("myIndex", i);
+
+           // $(objName3).attr("myindex" , i);
         $("#city-holder").append(objName);  
     }
 
@@ -202,6 +221,7 @@ const updateCityWeatherUI  = (weatherData) => {
 
     let savedCities = loadSavedCitiesData();
     cityName = savedCities[0];
+    
     cityIcon = weatherData.current.weather[0].icon;
     $("#weatherIcon0").attr("src", "http://openweathermap.org/img/w/" + cityIcon + ".png");
     cityTemp = weatherData.current.temp;
@@ -254,16 +274,17 @@ const getCoords = (city) => {
             response.json().then(function(data) {
                // displayRepos(data.items, language);
                coords = data;
-               console.log(data);
+              // console.log(data);
                localStorage.setItem("coords", JSON.stringify(data));
 
                let lon = data.coord.lon;
                let lat = data.coord.lat;
-               console.log("lat=" + lat + " lon= " + lon);
+              // console.log("lat=" + lat + " lon= " + lon);
 
 
                // Use one Call API to get all the data we need
-              
+               
+              console.log ("in getcoords");
                getWeather(lon, lat);
 
             });
@@ -283,13 +304,14 @@ const getWeather = (lon,lat) => {
     fetch(apiUrl).then(function(response) {
         if(response.ok) {
             response.json().then(function(data) {
+              
                // displayRepos(data.items, language);
                let weatherData = data;
-               console.log(data);
+               console.log("in getWeather()");
                localStorage.setItem("weatherData", JSON.stringify(data));
                // get the lon and lat so I can call the one call api
 
-               readWeatherData(weatherData);
+              updateUI();
                  
             });
         } else {
@@ -297,57 +319,141 @@ const getWeather = (lon,lat) => {
         }
     });
 
+   
+
 
 }
+$("#city-holder").on("click", ".btn-secondary", function() {
+    savedCities = loadSavedCitiesData();
 
-// Capture all button events
-const buttonHandler = (event) => {
-
-
-   // if(event.target.id === "debug")
-    //{
-        // This is where I will force a getCoords();
-      //  console.log("Calling new weather");
+    console.log(this);
+    let index = $(this).attr("myIndex");
     
-      //  searchCity = $("#srchInput").val();
-       // getCoords(searchCity);
-  //  }
-    if(event.target.id === "srchBtn") {
+    let searchCity = savedCities[index];
 
-        searchCity = $("#srchInput").val(); 
-       // console.log(searchCity);
-       searchCity = searchCity.toUpperCase();
-       $("#srchInput").val("");
-     //  console.log(searchCity);
-       getCoords(searchCity);
+    // Moves the specific element to the front and pushes everything else
+    // down one spot.
 
-       if(searchCity == "") {
-           alert("You did not enter a city.");
-           return;
+    savedCities.forEach(function(item, i) {
+        if(item === searchCity) {
+            savedCities.splice(i,1);
+            savedCities.unshift(item);
+
         }
-      
+    });
+    console.log(savedCities);
+    localStorage.setItem("savedCities", JSON.stringify(savedCities));
         
-         //let savedCities = loadSavedCitiesData();
+    console.log(searchCity);
+    getCoords(searchCity);
+    updateUI();
 
+});
+
+
+$("#search-holder").on("click", "#srchBtn", function() {
+
+    console.log("in click");
+    searchCity = $("#srchInput").val(); 
+    searchCity = searchCity.toUpperCase();
+    $("#srchInput").val("");
+ 
+    if(searchCity == "") {
+
+
+        
+       // alert("You did not enter a city.");
+       // $("#srchInput").css("font-weight", "Bold");
+     //   $("#srchInput").effect("pulsate", {times:3}, 2000);
+        //$("#srchInput").stop().css("background-color", "#FFFF9C").animate({ backgroundColor : "#FFFFFF"}, 1500);
+       // $("#srchInput").val().effect("highlight", {}, 3000);
+        $("#srchInput").stop(true, true).animate({opacity: 0.1}, 100).delay(100).animate({opacity: 1}, 100)
+            .animate({opacity: 0.1}, 100).delay(100).animate({opacity: 1}, 100);
+        return;
+     }
+
+     savedCities = loadSavedCitiesData();
+   
+     // lets see if they entered a city that has a button already
+     // 
+
+     // use a bool to see if its a dupe
+     let isDupe = false;
+     for (let i = 0; i < savedCities.length; i++) {
+         const element = savedCities[i];
+         if(savedCities[i]=== searchCity) {
+
+            // We already have a button for this.
+            // move it to the top and click it
+            savedCities.forEach(function(item, i) {
+                if(item === searchCity) {
+                    savedCities.splice(i,1);
+                    savedCities.unshift(item);
+                    isDupe = true;
+        
+                }
+            });
+
+         }
+         
+     } 
+     
+     // add the new city to the top of the array
+     //
+     //
+     // DEBUG I MAY WANT TO CHECK AND SEE IF THEY ARE ALREADY ON THE ARRAY
+     if(isDupe === true) {
+
+
+     }else { 
         savedCities.unshift(searchCity);
         if(savedCities.length > 8) {
-           
-            
+            // pop the last one off the array
             savedCities.pop();
+     
+        };
+     }
+  
+     localStorage.setItem("savedCities", JSON.stringify(savedCities));
+ 
+     getCoords(searchCity);
+
+});
+
+// Capture all button events
+//const buttonHandler = (event) => {
+
+
+    // if(event.target.id === "srchBtn") {
         
 
-        };
-        localStorage.setItem("savedCities", JSON.stringify(savedCities));
-       
-        // Call the server
-        // for now disable this
-
-        //getCoords(searchCity);
-
-        updateSavedCitiesUI(savedCities);
-
-    }
-};
+    //    searchCity = $("#srchInput").val(); 
+    //    searchCity = searchCity.toUpperCase();
+    //    $("#srchInput").val("");
+    
+    //    if(searchCity == "") {
+    //        alert("You did not enter a city.");
+    //        return;
+    //     }
+      
+    //      savedCities = loadSavedCitiesData();
+    //     // add the new city to the top of the array
+    //     //
+    //     //
+    //     // DEBUG I MAY WANT TO CHECK AND SEE IF THEY ARE ALREADY ON THE ARRAY
+    //     savedCities.unshift(searchCity);
+    //     if(savedCities.length > 8) {
+    //         // pop the last one off the array
+    //         savedCities.pop();
+        
+    //     };
+     
+    //     localStorage.setItem("savedCities", JSON.stringify(savedCities));
+    
+    //     getCoords(searchCity);
+     
+    // }
+//};
 
 
 
@@ -355,4 +461,4 @@ initialSetup();
 
 
 // EventListenerd
-document.addEventListener("click", buttonHandler);
+//document.addEventListener("click", buttonHandler);
