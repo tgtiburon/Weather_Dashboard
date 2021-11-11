@@ -1,58 +1,111 @@
 
 const mainContainerEl = document.querySelector("p>#main-container");
 
-// let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + yekIPA;
-//         axios.get(queryURL)
-//         .then(function(response){
 
-// lansing 4998830
-//#region Variables
 const yekIPA = "14a2bf498ec7475c9f365cf46a525533";
-//const cityName = "lansing";
-const lansingID = 4998830;
-let cityName = "Lansing";
+
+
+let cityName = "City Name"
 let  cityTemp = "0 F";
 let cityWind = "0 MPH";
 let cityHumidity = "0%";
 let cityUV = "0.00";
 weatherData = [];
 let savedCities = [];
+let firstRun = true;
 
 
 const initialSetup = () => {
-    console.log("in initial setup");
-
-    // for debugging lets load the saved data to stop server spam
-    let weatherData = loadWeatherData();
-    let savedCities = loadSavedCitiesData();
-  
-    console.log(weatherData);
-    console.log(savedCities);
-    // lets read the weatherData
-
-    updateSavedCitiesUI(savedCities);
-    updateFiveDayUI(weatherData);
     
-   
+    console.log("in initial setup");
+    //load weatherdata to see if it's first time run
+    loadWeatherData();
+
+    if (firstRun === true) {
+        //We need to supply the screen with dummy data
+        // Get today's date using moment.js
+        var todaysDate = moment().format("l");
+
+
+        $("#cityName0").text("City Name   (" + todaysDate + ")");
+        $("#weatherIcon0").attr("src", "http://openweathermap.org/img/w/01d.png");
+        $("#cityTemp0").text("Temp: -- °F" );
+        $("#cityHumidity0").text("Humidity: --%");
+        $("#cityWind0").text("Wind: -- MPH");
+        $("#cityUV0").text("0.00"); // need to make this a badge
+        // Since we are just setting up a dummy screen we can set it to green
+       $("#cityUV0").attr("class", " badge badge-pill badge-success");
+
+       firstRun = false;
+      
+    } else {
+
+        //If there is data update with that data.
+        updateUI();
+
+    }
 
 }
+const loadSavedCitiesData = () => {
+
+    let savedCities = localStorage.getItem("savedCities");
+
+    if (!savedCities) {
+        savedCities = [];
+      
+    } else {
+      
+        savedCities = JSON.parse(localStorage.getItem("savedCities"));
+        
+        
+    }
+        
+    return savedCities;
+}
+
+const loadWeatherData = () => {
+
+    let weatherData = localStorage.getItem("weatherData");
+    
+
+    if (!weatherData) {
+        weatherData = [];
+        firstRun = true;
+    
+    } else {
+        // weatherData = JSON.parse(weatherData);
+        // numOfTasks = weatherData.length;
+        weatherData = JSON.parse(localStorage.getItem("weatherData"));
+        firstRun = false;
+       // readWeatherData(weatherData);
+          
+    }
+        
+    return weatherData;
+
+  
+    
+};
+
+
+
+
+
+
 const updateFiveDayUI = (weatherData) =>  {
     // iterrate through 5 days
 
     for (let i = 0; i < 5.; i++) {
  
-      // debugger;
-
+   
         let objName1 = "";
         objName1 = $("<div>")
             .addClass("col-2 card mb-5 bg-secondary");
            
            // use moment.js
-        //let tmpStr = moment().format("l");
-       // let tmpStr = moment().add(i, 'days').calendar();
+  
        let tmpStr = moment().add(i, 'days').format("l");
-
-       // let tmpStr = weatherData.daily[0].temp.max;    
+    
         let objName2 = "";
        
 
@@ -73,9 +126,6 @@ const updateFiveDayUI = (weatherData) =>  {
             //.attr('src', tmpStr2);
 
        
-        
-
-
         tmpStr = weatherData.daily[i].temp.max;
         let objName4= "";
         objName4 = $("<p>")
@@ -107,55 +157,14 @@ const updateFiveDayUI = (weatherData) =>  {
         objName1.append(objName3);
         objName1.append(objName4);
         objName1.append(objName5);
-        objName1.append(objName6);
-
-
-       // $("#cityIcon" + i).attr("src", "http://openweathermap.org/img/w/" + tmpStr + ".png");
-     
+        objName1.append(objName6); 
         
     }
 
 
 }
-const loadSavedCitiesData = () => {
 
-    let savedCities = localStorage.getItem("savedCities");
 
-    if (!savedCities) {
-        savedCities = [];
-      
-    } else {
-        // savedCities = JSON.parse(savedCities);
-        // numOfTasks = savedCities.length;
-        savedCities = JSON.parse(localStorage.getItem("savedCities"));
-        
-        
-    }
-        
-    return savedCities;
-}
-
-const loadWeatherData = () => {
-
-    let weatherData = localStorage.getItem("weatherData");
-    
-
-    if (!weatherData) {
-        weatherData = [];
-    
-    } else {
-        // weatherData = JSON.parse(weatherData);
-        // numOfTasks = weatherData.length;
-        weatherData = JSON.parse(localStorage.getItem("weatherData"));
-        readWeatherData(weatherData);
-          
-    }
-        
-    return weatherData;
-
-  
-    
-};
 
 
 const updateSavedCitiesUI = (savedCities) => {
@@ -182,42 +191,32 @@ const updateSavedCitiesUI = (savedCities) => {
 
 }
 
-const readWeatherData = (weatherData) => {
-   // cityName = weatherData.current.name;
-    cityIcon = weatherData.current.weather[0].icon;
-    cityTemp = weatherData.current.temp;
-    cityWind = weatherData.current.wind_speed;
-    cityHumidity = weatherData.current.humidity;
-    cityUV = weatherData.current.uvi;
-    
-    console.log("cityName= " + cityName);
-    console.log("cityTemp= " + cityTemp);
-    console.log("cityWind= " + cityWind);
-    console.log("cityHumidity= " + cityHumidity);
-    console.log("cityUV= " + cityUV);
 
-
-    updateCityWeatherUI(cityName, cityIcon, cityTemp, cityWind, cityHumidity, cityUV);
-
-
-}
 // use our data to update the whole UI
-const updateCityWeatherUI  = (cityName, cityIcon, cityTemp, cityWind, cityHumidity, cityUV) => {
+const updateCityWeatherUI  = (weatherData) => {
 
-    $("#weatherIcon0").attr("src", "http://openweathermap.org/img/w/" + cityIcon + ".png");
+ 
    
     // Get today's date using moment.js
     var todaysDate = moment().format("l");
 
- //cityUV = "2.00";
+    let savedCities = loadSavedCitiesData();
+    cityName = savedCities[0];
+    cityIcon = weatherData.current.weather[0].icon;
+    $("#weatherIcon0").attr("src", "http://openweathermap.org/img/w/" + cityIcon + ".png");
+    cityTemp = weatherData.current.temp;
+    cityWind = weatherData.current.wind_speed;
+    cityHumidity = weatherData.current.humidity;
+    cityUV = weatherData.current.uvi;
+
+ 
 
     $("#cityName0").text(cityName + "  (" + todaysDate + ")");
     $("#cityTemp0").text("Temp: " + cityTemp + " °F" );
     $("#cityHumidity0").text("Humidity: " + cityHumidity + "%");
     $("#cityWind0").text("Wind: "+ cityWind + " MPH");
     $("#cityUV0").text(cityUV); // need to make this a badge
-   // $("#cityUV0").addClass("badge badge-pill badge-primary");
-    // We need if's to set up colored badges based on UVI
+  
     if (cityUV <= 2.99) {
         // Green badge
         $("#cityUV0").attr("class", " badge badge-pill badge-success");
@@ -230,10 +229,20 @@ const updateCityWeatherUI  = (cityName, cityIcon, cityTemp, cityWind, cityHumidi
         $("#cityUV0").attr("class", " badge badge-pill badge-danger");
     } 
 }
+const updateUI = () => {
 
+    // for debugging lets load the saved data to stop server spam
+    let weatherData = loadWeatherData();
+    let savedCities = loadSavedCitiesData();
+
+   updateSavedCitiesUI(savedCities);
+   updateCityWeatherUI(weatherData);
+   updateFiveDayUI(weatherData);
+
+}
 // Use api to get coordinates of city name
 const getCoords = (city) => {
-//debugger;
+  
 
    // debugging
    cityName = city;
@@ -265,7 +274,7 @@ const getCoords = (city) => {
 };
 // Use coordinates to get all the weather data needed.
 const getWeather = (lon,lat) => {
-    debugger;
+   
 
     // using the one call api from openweathermap we can get everything we need.
     let apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat  + "&lon=" + lon 
@@ -293,20 +302,24 @@ const getWeather = (lon,lat) => {
 
 // Capture all button events
 const buttonHandler = (event) => {
-debugger;
 
-    if(event.target.id === "debug")
-    {
+
+   // if(event.target.id === "debug")
+    //{
         // This is where I will force a getCoords();
-        console.log("Calling new weather");
-        //city = "lansing";
-        searchCity = $("#srchInput").val();
-        getCoords(searchCity);
-    }
+      //  console.log("Calling new weather");
+    
+      //  searchCity = $("#srchInput").val();
+       // getCoords(searchCity);
+  //  }
     if(event.target.id === "srchBtn") {
 
         searchCity = $("#srchInput").val(); 
        // console.log(searchCity);
+       searchCity = searchCity.toUpperCase();
+       $("#srchInput").val("");
+     //  console.log(searchCity);
+       getCoords(searchCity);
 
        if(searchCity == "") {
            alert("You did not enter a city.");
@@ -318,10 +331,10 @@ debugger;
 
         savedCities.unshift(searchCity);
         if(savedCities.length > 8) {
-            //debugger;
+           
             
             savedCities.pop();
-            //debugger;
+        
 
         };
         localStorage.setItem("savedCities", JSON.stringify(savedCities));
@@ -338,7 +351,6 @@ debugger;
 
 
 
-//getCoords(cityName);
 initialSetup();
 
 

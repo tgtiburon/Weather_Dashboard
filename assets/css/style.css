@@ -50,8 +50,13 @@ hr.solid {
 }
 #city-weather{
     border: 2px solid black;
-    height: 40%;
+    /* height: 60%; */
     margin: 2%;
+    min-height: 33%;
+}
+#cityName0 {
+    margin-bottom: 1rem;
+   
 }
 #city-forecast{
     /* border: 2px solid yellow; */
@@ -60,6 +65,7 @@ hr.solid {
 #city-weather{
    padding:3%;
    font-size: 1.3rem;
+   /* min-height: 33%; */
     
     
 }
@@ -86,6 +92,7 @@ hr.solid {
 #city-holder {
     height: 90%;
 }
+
 
 
 
