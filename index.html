@@ -10,17 +10,7 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     />
-    <!-- <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
-      crossorigin="anonymous"
-    /> -->
-    <!-- <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
-      rel="stylesheet"
-    /> -->
-    <!-- test icons -->
+  
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css"
       rel="stylesheet"
@@ -29,7 +19,7 @@
         href="./assets/css/style.css" 
         rel="stylesheet"
     />
-    <title>Weather Dashboard</title>
+    <title>Weather Watcher</title>
 </head>
 
 
@@ -45,7 +35,7 @@
     <!-- Left Column  -->
     <div class="p-0" id="main-container">
         <div class="row no-gutters">
-            <div class= "col-3 flex-column  p-5 h-100" id="city-box">
+            <div class= "col-12 col-md-4 col-lg-3 flex-column  p-5 h-100" id="city-box">
                 <div class="" id="search-holder">
                     <p class="input-header">Search for a City:</p>
                     <input class="form-control mb-4"  id="srchInput" type="text" placeholder="Enter City Name">
@@ -62,12 +52,11 @@
           
 
 <!--  Right column -->
-            <div class ="col-9" id="forecast-display">
+            <div class ="col-12 col-md-8 col-lg-9" id="forecast-display">
                 <div class="" id="city-weather">
 
-                    <!-- <span class="font-weight-bold" id="cityName0">City Name   (Date)</span> -->
+              
                     <span p class="font-weight-bold" id="cityName0">City Name (Date) </span>
-                    <!-- <span img id = "weatherIcon0" src=""></span> -->
                     <img id="weatherIcon0">
 
                     <p class="font-weight-bold" id="cityTemp0">Temp:--F</p>
@@ -80,8 +69,9 @@
                 </div>
                 <!-- five day forecast -->
                 <div class="row " id="city-forecast">
-                    <p class="font-weight-bold" id="fiveDayTitle">5-Day Forecast:</p>
-                    <div class="col-12 flex-row justify-content-around " id="castHolder">
+                    <p class="font-weight-bold ml-4" id="fiveDayTitle">5-Day Forecast:</p>
+                    <div class="col-12 flex-row flex-wrap justify-content-around " id="castHolder">
+                   
 <!-- paste into here if I need to-->
 
                       

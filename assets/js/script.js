@@ -117,7 +117,7 @@ const updateFiveDayUI = (weatherData) =>  {
    
         let objName1 = "";
         objName1 = $("<div>")
-            .addClass("col-2 card mb-5 bg-secondary");
+            .addClass("col-5 col-md-5 col-lg-2 card mb-5 bg-secondary");
            
            // use moment.js
   
