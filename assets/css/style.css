@@ -52,7 +52,8 @@ hr.solid {
     border: 2px solid black;
     /* height: 60%; */
     margin: 2%;
-    min-height: 33%;
+    min-height: 30%;
+    /* background-color */
 }
 #cityName0 {
     margin-bottom: 1rem;
@@ -60,7 +61,7 @@ hr.solid {
 }
 #city-forecast{
     /* border: 2px solid yellow; */
-    height: 60%;
+    /* height: 10%; */
 }
 #city-weather{
    padding:3%;
@@ -76,7 +77,8 @@ hr.solid {
 }
 #fiveDayTitle {
     font-size: 2.0rem;
-    padding: 3%;
+    /* padding: 1%; */
+    /* margin-bottom: 0%; */
 }
 .card
 
