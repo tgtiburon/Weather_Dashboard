@@ -19,6 +19,7 @@ A weather website that lets the user either search for any cities weather, or to
 * Bootstrap
 * Moment.js
 * JQuery
+* Simulate a button press when hitting enter key
 
 
 ## Demonstrates the following skills:

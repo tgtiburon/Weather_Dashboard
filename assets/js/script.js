@@ -1,15 +1,15 @@
 
-const mainContainerEl = document.querySelector("p>#main-container");
+//const mainContainerEl = document.querySelector("p>#main-container");
 
 
 const yekIPA = "14a2bf498ec7475c9f365cf46a525533";
 
 
-let cityName = "City Name"
-let  cityTemp = "0 F";
-let cityWind = "0 MPH";
-let cityHumidity = "0%";
-let cityUV = "0.00";
+//let cityName = "City Name"
+//let  cityTemp = "0 F";
+//let cityWind = "0 MPH";
+//let cityHumidity = "0%";
+//let cityUV = "0.00";
 weatherData = [];
 let savedCities = [];
 let firstRun = true;
@@ -18,10 +18,14 @@ let firstRun = true;
 // DEBUG STUFF
 
 
+/*  Function: initialSetup()  
+    => load initial data and sets up the UI based on what is there
+    args: none
+    return: none
+*/
 
 const initialSetup = () => {
     
-    console.log("in initial setup");
     //load weatherdata to see if it's first time run
     loadWeatherData();
 
@@ -29,7 +33,6 @@ const initialSetup = () => {
         //We need to supply the screen with dummy data
         // Get today's date using moment.js
         var todaysDate = moment().format("l");
-
 
         $("#cityName0").text("City Name   (" + todaysDate + ")");
         $("#weatherIcon0").attr("src", "http://openweathermap.org/img/w/01d.png");
@@ -50,40 +53,39 @@ const initialSetup = () => {
     }
 
 }
+
+/*  Function: loadsavedCitiesData()  
+    => laads previous searches
+    args: none
+    return: savedCities object
+*/
 const loadSavedCitiesData = () => {
 
     let savedCities = localStorage.getItem("savedCities");
 
     if (!savedCities) {
-       // savedCities = [];
-       //debugging;
-       savedCities = [
-       // "DETROIT", 
-       // "MIAMI", 
-       // "DAYTON",
-       // "DALLAS",
-       // "MEMPHIS",
-       // "ATLANTA",
-       // "CHICAGO"
-    
-    ];
+      
+       savedCities = [];
     localStorage.setItem("savedCities", JSON.stringify(savedCities));
       
     } else {
       
         savedCities = JSON.parse(localStorage.getItem("savedCities"));
-        
-        
+              
     }
         
     return savedCities;
 }
 
+/*  Function: loadWeatherData()  
+    => loads the weather data form localStorage
+    args: none
+    return: returns the weatherData Object
+*/
 const loadWeatherData = () => {
 
     let weatherData = localStorage.getItem("weatherData");
     
-
     if (!weatherData) {
         weatherData = [];
         firstRun = true;
@@ -91,47 +93,43 @@ const loadWeatherData = () => {
     } else {
       
         weatherData = JSON.parse(localStorage.getItem("weatherData"));
-        firstRun = false;
-     
+        firstRun = false;  
           
     }
         
-    return weatherData;
-
-  
-    
+    return weatherData;  
 };
 
-
+/*  Function: updateFiveDayUI()  
+    => Updates the fiveday forecast
+    args: weatherData Object
+    return: none
+*/
 
 const updateFiveDayUI = (weatherData) =>  {
     // iterrate through 5 days
     if($(".card")) {
-
-        // If the cards exist lets clear them.
+        // If the cards exist lets clear them 
+        // and start over.
         $("#castHolder").empty();
     }
-
+    //Loop through the five days and setup the cards
     for (let i = 0; i < 5.; i++) {
  
-   
         let objName1 = "";
         objName1 = $("<div>")
             .addClass("col-5 col-md-5 col-lg-2 card mb-5 bg-secondary");
            
-           // use moment.js
-  
+        // use moment.js
        let tmpStr = moment().add(i, 'days').format("l");
     
         let objName2 = "";
        
-
         objName2 = $("<h4>")
             .addClass("font-weight-bold bg-secondary")
             .attr('id', 'cityDate'+ i)
             .text(tmpStr);
-
-          
+  
         tmpStr = weatherData.daily[i].weather[0].icon;
         let weathStr = "http://openweathermap.org/img/w/" + tmpStr + ".png"
          
@@ -148,7 +146,6 @@ const updateFiveDayUI = (weatherData) =>  {
             .attr('id', "cityTemp: " + i)
             .text("Temp: " + tmpStr + " °F");
 
-
         tmpStr = weatherData.daily[i].wind_speed;
         let objName5= "";
         objName5 = $("<p>")
@@ -156,17 +153,13 @@ const updateFiveDayUI = (weatherData) =>  {
                 .attr('id', "cityWind" + i)
                 .text("Wind: " + i + " MPH");
 
-
         tmpStr = weatherData.daily[0].humidity;
-       // console.log(tmpStr);
         let objName6= "";
         objName6 = $("<p>")
                 .addClass("font-weight-bold")
                 .attr('id', "cityHumidity" + i)
                 .text("Humidity: " + tmpStr + " %"  );
 
-
-     
         $("#castHolder").append(objName1);
         objName1.append(objName2);
         objName1.append(objName3);
@@ -175,68 +168,72 @@ const updateFiveDayUI = (weatherData) =>  {
         objName1.append(objName6); 
         
     }
-
-
 }
 
 
 
-
+/*  Function: updateSavedCitiesUI()  
+    => Updates the 8 buttons that save past searches
+    args: saveedCities Object
+    return: none
+*/
 const updateSavedCitiesUI = (savedCities) => {
     // iterate to load our saved cities
-  
-
+    // Clear the div to rebuild it.
     $("#city-holder").empty();
 
-    if(savedCities.length > 8) {
-
-      
+    // bug
+    //
+    //
+    // Only storing 8 cities
+  //  if(savedCities.length > 8) {
         // we need to shorten it.
-    }
+   // }
+
     for (let i = 0; i < savedCities.length; i++) {
    
         let objName = "";
         buttonStr = savedCities[i];
 
+        // Use buttons to store cities.
         objName = $("<button>")
             .addClass("btn btn btn-secondary w-100 mb-3")
             .html(buttonStr)
             .attr("myIndex", i);
-
-           // $(objName3).attr("myindex" , i);
         $("#city-holder").append(objName);  
     }
 
 
 }
+/*  Function: updateCityWeatherUI()  
+    => takes weatherData and updates the City weather
+        part of the ui (upper right)
+    args: weatherData object
+    return: none
+*/
 
-
-// use our data to update the whole UI
+// use our data to update the city weather UI
 const updateCityWeatherUI  = (weatherData) => {
 
- 
-   
     // Get today's date using moment.js
     var todaysDate = moment().format("l");
 
     let savedCities = loadSavedCitiesData();
     cityName = savedCities[0];
-    
+    // pull the data we need from the weatherData object
     cityIcon = weatherData.current.weather[0].icon;
     $("#weatherIcon0").attr("src", "http://openweathermap.org/img/w/" + cityIcon + ".png");
     cityTemp = weatherData.current.temp;
     cityWind = weatherData.current.wind_speed;
     cityHumidity = weatherData.current.humidity;
     cityUV = weatherData.current.uvi;
-
- 
-
+    // set the attributes of the elements 
     $("#cityName0").text(cityName + "  (" + todaysDate + ")");
     $("#cityTemp0").text("Temp: " + cityTemp + " °F" );
     $("#cityHumidity0").text("Humidity: " + cityHumidity + "%");
     $("#cityWind0").text("Wind: "+ cityWind + " MPH");
     $("#cityUV0").text(cityUV); // need to make this a badge
-  
+    // properly color the UV Index badge
     if (cityUV <= 2.99) {
         // Green badge
         $("#cityUV0").attr("class", " badge badge-pill badge-success");
@@ -249,6 +246,13 @@ const updateCityWeatherUI  = (weatherData) => {
         $("#cityUV0").attr("class", " badge badge-pill badge-danger");
     } 
 }
+
+/*  Function: updateUI()  
+    => calls all the updateUI functions after
+        loading the needed data.
+    args: none
+    return: none
+*/
 const updateUI = () => {
 
     // for debugging lets load the saved data to stop server spam
@@ -260,39 +264,46 @@ const updateUI = () => {
    updateFiveDayUI(weatherData);
 
 }
-// Use api to get coordinates of city name
+
+/*  Function: getCoords()  
+    => uses the api to get the lon and lat of the
+        requested city
+    args: city which stores the city the user searched
+    return: none
+*/
+
+
 const getCoords = (city) => {
   
-
-   // debugging
    cityName = city;
-  
+  // create the url we will send
     let apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=imperial" + "&appid="  + yekIPA;
-
+    // use fetch to get the data.
     fetch(apiUrl).then(function(response) {
         if(response.ok) {
             response.json().then(function(data) {
-               // displayRepos(data.items, language);
                coords = data;
-              // console.log(data);
                localStorage.setItem("coords", JSON.stringify(data));
 
                let lon = data.coord.lon;
                let lat = data.coord.lat;
-              // console.log("lat=" + lat + " lon= " + lon);
-
-
-               // Use one Call API to get all the data we need
-               
-              console.log ("in getcoords");
+                // now that we have lon and lat call the one api
                getWeather(lon, lat);
-
             });
+            // catch fetch errors
         } else {
-            alert("Error:  Open Weather Failed");
+            alert("Error:  Open Weather Failed! Check the spelling of your city name please!");
+            // Update UI to show error button
+            updateUI();
         }
     });
 };
+
+/*  Function: getWeather()  
+    => calls the 5 day forecast from the api
+    args: lon and lat of city being searched
+    return: none
+*/
 // Use coordinates to get all the weather data needed.
 const getWeather = (lon,lat) => {
    
@@ -304,16 +315,13 @@ const getWeather = (lon,lat) => {
     fetch(apiUrl).then(function(response) {
         if(response.ok) {
             response.json().then(function(data) {
-              
-               // displayRepos(data.items, language);
-               let weatherData = data;
-               console.log("in getWeather()");
+    
                localStorage.setItem("weatherData", JSON.stringify(data));
-               // get the lon and lat so I can call the one call api
-
+                // now that we have all the data, update the ui
               updateUI();
                  
             });
+            //catch errors
         } else {
             alert("Error:  Open Weather Failed");
         }
@@ -323,60 +331,56 @@ const getWeather = (lon,lat) => {
 
 
 }
+
+/*  Function: .btn-secondary clicked  
+    => saved city  button clicked.
+    args: none
+    return: none
+*/
 $("#city-holder").on("click", ".btn-secondary", function() {
     savedCities = loadSavedCitiesData();
-
-    console.log(this);
+    // figure out which saved city button was clicked
     let index = $(this).attr("myIndex");
-    
+    // get the name of the city on that button
     let searchCity = savedCities[index];
-
     // Moves the specific element to the front and pushes everything else
     // down one spot.
-
     savedCities.forEach(function(item, i) {
         if(item === searchCity) {
             savedCities.splice(i,1);
             savedCities.unshift(item);
-
         }
     });
-    console.log(savedCities);
+
     localStorage.setItem("savedCities", JSON.stringify(savedCities));
-        
-    console.log(searchCity);
+    // get the coordinates of the called city
     getCoords(searchCity);
     updateUI();
 
 });
 
-
+/*  Function: #srchBtn clicked  
+    => search  button clicked.
+    args: none
+    return: none
+*/
 $("#search-holder").on("click", "#srchBtn", function() {
-
-    console.log("in click");
+    // store the user input
     searchCity = $("#srchInput").val(); 
     searchCity = searchCity.toUpperCase();
+    // clear data
     $("#srchInput").val("");
- 
+    // if they input no cityname 
     if(searchCity == "") {
-
-
-        
-       // alert("You did not enter a city.");
-       // $("#srchInput").css("font-weight", "Bold");
-     //   $("#srchInput").effect("pulsate", {times:3}, 2000);
-        //$("#srchInput").stop().css("background-color", "#FFFF9C").animate({ backgroundColor : "#FFFFFF"}, 1500);
-       // $("#srchInput").val().effect("highlight", {}, 3000);
+        // make the Enter City Name Flash
         $("#srchInput").stop(true, true).animate({opacity: 0.1}, 100).delay(100).animate({opacity: 1}, 100)
             .animate({opacity: 0.1}, 100).delay(100).animate({opacity: 1}, 100);
         return;
      }
-
+     // load the savedCities object so we can add our new city if needed
      savedCities = loadSavedCitiesData();
    
      // lets see if they entered a city that has a button already
-     // 
-
      // use a bool to see if its a dupe
      let isDupe = false;
      for (let i = 0; i < savedCities.length; i++) {
@@ -390,12 +394,9 @@ $("#search-holder").on("click", "#srchBtn", function() {
                     savedCities.splice(i,1);
                     savedCities.unshift(item);
                     isDupe = true;
-        
                 }
             });
-
-         }
-         
+         }   
      } 
      
      // add the new city to the top of the array
@@ -403,9 +404,12 @@ $("#search-holder").on("click", "#srchBtn", function() {
      //
      // DEBUG I MAY WANT TO CHECK AND SEE IF THEY ARE ALREADY ON THE ARRAY
      if(isDupe === true) {
-
+         // if it is a dupe we already took care of it 
+         // above
 
      }else { 
+         // if it is not a dupe then remove the oldest city
+         // and add the new city to the bottom
         savedCities.unshift(searchCity);
         if(savedCities.length > 8) {
             // pop the last one off the array
@@ -415,50 +419,25 @@ $("#search-holder").on("click", "#srchBtn", function() {
      }
   
      localStorage.setItem("savedCities", JSON.stringify(savedCities));
- 
+     
      getCoords(searchCity);
 
 });
 
-// Capture all button events
-//const buttonHandler = (event) => {
 
+/*  Function: enter key 
+    => hit to submit simulate srchBtn clicked  
+    args: none
+    return: none
+*/
+$("#srchInput").keypress(function(e) {
+    if (event.which === 13) {
+        console.log("enter hit");
+        $("#srchBtn").trigger("click");
+        return false;
+    }
+});
 
-    // if(event.target.id === "srchBtn") {
-        
-
-    //    searchCity = $("#srchInput").val(); 
-    //    searchCity = searchCity.toUpperCase();
-    //    $("#srchInput").val("");
-    
-    //    if(searchCity == "") {
-    //        alert("You did not enter a city.");
-    //        return;
-    //     }
-      
-    //      savedCities = loadSavedCitiesData();
-    //     // add the new city to the top of the array
-    //     //
-    //     //
-    //     // DEBUG I MAY WANT TO CHECK AND SEE IF THEY ARE ALREADY ON THE ARRAY
-    //     savedCities.unshift(searchCity);
-    //     if(savedCities.length > 8) {
-    //         // pop the last one off the array
-    //         savedCities.pop();
-        
-    //     };
-     
-    //     localStorage.setItem("savedCities", JSON.stringify(savedCities));
-    
-    //     getCoords(searchCity);
-     
-    // }
-//};
-
-
-
+//Start the program
 initialSetup();
 
-
-// EventListenerd
-//document.addEventListener("click", buttonHandler);
