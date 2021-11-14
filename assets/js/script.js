@@ -26,7 +26,7 @@ const initialSetup = () => {
         var todaysDate = moment().format("l");
 
         $("#cityName0").text("City Name   (" + todaysDate + ")");
-        $("#weatherIcon0").attr("src", "http://openweathermap.org/img/w/01d.png");
+        $("#weatherIcon0").attr("src", "https://openweathermap.org/img/w/01d.png");
         $("#cityTemp0").text("Temp: -- °F" );
         $("#cityHumidity0").text("Humidity: --%");
         $("#cityWind0").text("Wind: -- MPH");
@@ -122,7 +122,7 @@ const updateFiveDayUI = (weatherData) =>  {
             .text(tmpStr);
   
         tmpStr = weatherData.daily[i].weather[0].icon;
-        let weathStr = "http://openweathermap.org/img/w/" + tmpStr + ".png"
+        let weathStr = "https://openweathermap.org/img/w/" + tmpStr + ".png"
          
         let objName3= "";
         objName3 = $("<img>")
@@ -205,7 +205,7 @@ const updateCityWeatherUI  = (weatherData) => {
     cityName = savedCities[0];
     // pull the data we need from the weatherData object
     cityIcon = weatherData.current.weather[0].icon;
-    $("#weatherIcon0").attr("src", "http://openweathermap.org/img/w/" + cityIcon + ".png");
+    $("#weatherIcon0").attr("src", "https://openweathermap.org/img/w/" + cityIcon + ".png");
     cityTemp = weatherData.current.temp;
     cityWind = weatherData.current.wind_speed;
     cityHumidity = weatherData.current.humidity;
