@@ -8,11 +8,11 @@
 
 
 
-## Purpose
+## Purpose:
 A weather website that lets the user search for any city in the world's weather.  It also stores the last 8 searches to make rescanning your favorite cities easier. 
 
 
-## Built with
+## Built with:
 * HTML
 * CSS
 * Javascript
