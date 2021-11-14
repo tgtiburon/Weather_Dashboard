@@ -18,7 +18,7 @@
 body {
     color:var(--color1);
     font-family: Helvetica, Arial, Helvetica, sans-serif;
-    background-color: lightgray;
+    
 
 }
 .navbar {
@@ -72,25 +72,18 @@ hr.solid {
 
 
 
-
-
 /* Media Query for better mobile responsiveness */
 /* Handeled with Bootstrap */
 @media screen and (max-width: 980px) {
 
     /* NO CHANGES NEEDED FOR THIS RESOLUTION */
-      
-    
+         
 }/*980px breakpoint end */
 @media screen and (max-width: 768px) {
       
-     
-    
+       
 }/*768px breakpoint end */
     
 @media screen and (max-width: 575px) {
-
-
-     
-        
+          
 }/*575px breakpoint end */

@@ -1,15 +1,15 @@
-# Weather_Dashboard
+# Weather_Watcher
 
 
-<img src="./assets/images/WeatherDashboard.PNG"
-     alt="The user interface of Weather Dashboard."
+<img src="./assets/images/Weather_Watcher.PNG"
+     alt="The user interface of Weather Watcher."
       />
 
 
 
 
 ## Purpose
-A weather website that lets the user either search for any cities weather, or to have some preset cities. 
+A weather website that lets the user search for any city in the world's weather.  It also stores the last 8 searches to make rescanning your favorite cities easier. 
 
 
 ## Built with
@@ -19,7 +19,7 @@ A weather website that lets the user either search for any cities weather, or to
 * Bootstrap
 * Moment.js
 * JQuery
-* Simulate a button press when hitting enter key
+
 
 
 ## Demonstrates the following skills:
@@ -30,15 +30,17 @@ A weather website that lets the user either search for any cities weather, or to
     * Working with complicated logic
     * Dynamically creating web elements.
     * Responsive design.
+    * Simulate a button press when hitting enter key.
 
 
 
 
 ## Deployed Website
-https://tgtiburon.github.io/weather_dashboard/
+https://tgtiburon.github.io/Weather_Watcher/
 
 ## Github Repository
-https://github.com/tgtiburon/Weather_Dashboard
+https://github.com/tgtiburon/Weather_Watcher
+
 
 ##
 

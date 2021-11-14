@@ -1,21 +1,12 @@
 
-//const mainContainerEl = document.querySelector("p>#main-container");
-
 
 const yekIPA = "14a2bf498ec7475c9f365cf46a525533";
 
-
-//let cityName = "City Name"
-//let  cityTemp = "0 F";
-//let cityWind = "0 MPH";
-//let cityHumidity = "0%";
-//let cityUV = "0.00";
+// Variables
 weatherData = [];
 let savedCities = [];
 let firstRun = true;
 
-
-// DEBUG STUFF
 
 
 /*  Function: initialSetup()  
@@ -181,14 +172,6 @@ const updateSavedCitiesUI = (savedCities) => {
     // iterate to load our saved cities
     // Clear the div to rebuild it.
     $("#city-holder").empty();
-
-    // bug
-    //
-    //
-    // Only storing 8 cities
-  //  if(savedCities.length > 8) {
-        // we need to shorten it.
-   // }
 
     for (let i = 0; i < savedCities.length; i++) {
    
