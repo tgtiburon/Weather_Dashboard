@@ -105,7 +105,7 @@ const updateFiveDayUI = (weatherData) =>  {
         $("#castHolder").empty();
     }
     //Loop through the five days and setup the cards
-    for (let i = 0; i < 5.; i++) {
+    for (let i = 1; i < 6; i++) {
  
         let objName1 = "";
         objName1 = $("<div>")
